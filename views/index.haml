@@ -1,0 +1,16 @@
+%ul
+  %li テキスト入力で登録
+  %li 完了したらチェックボックスをクリック
+
+%form{method: 'POST', action: '/addtodo'}
+  %input{type: 'text', name: 'todo'}
+  %input{type: 'submit', value: '登録'}
+
+- @todos.each do |todo|
+  .todo
+    %form{name: "form#{todo.id}", method: 'POST', action: '/deltodo'}
+      %input{type: 'hidden', name: 'id', value: todo.id}
+      %input{type: 'checkbox', onclick: "document.form#{todo.id}.submit(); return false;"}
+      = todo.formatted_todo
+  .info
+    %span.date== (#{h todo.date})
